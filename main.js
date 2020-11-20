@@ -1,10 +1,20 @@
-console.log('Playing a game of Roshambo against the computer.');
-console.log('Player plays ${this.move}!');
-console.log('Computer plays ${this.move}!');
-console.log('~${player} wins~');
+const Player = require("./Player");
+const Game = require("./Game");
+const yargs = require("yargs");
+const { hideBin } = require("yargs/helpers")
 
-// //$ node main.js --move=rock
-// Playing a game of Roshambo against the computer.
-// Player plays rock!
-// Computer plays paper!
-// ~Computer wins.~
+function main(args) {
+    console.log("Playing a game of Roshambo against the computer.");
+    var playerA = new Player("Player", args.move, false);
+    var playerB = new Player("Computer", null, true);
+    var game = new Game(playerA, playerB);
+    var winner = game.play();
+    if (winner != null) {
+        console.log(`~${winner.name} wins.~`);
+    }
+    else {
+        console.log("Draw!");
+    }
+}
+
+main(yargs(hideBin(process.argv)).argv);
